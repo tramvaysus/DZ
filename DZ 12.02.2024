@@ -1,0 +1,46 @@
+#include <fstream>
+#include <iostream>
+#include <string>
+#include <vector>
+
+int tmp_x;
+int tmp_y;
+
+struct Point
+{
+    int x;
+    int y;
+};  
+
+void writeFile(int data) {
+  std::ofstream file("./list.txt", std::ios::app);
+  if (file.is_open()) {
+    while(tmp_x < 5){
+    file << data << " ";
+    }
+    file << std::endl;
+    file.close();
+  }
+
+
+  file.close();
+}
+
+void readFile() {
+  std::vector<Point>points;
+  std::ifstream riverFile("./river.txt");
+  if (riverFile.is_open()) {
+    while (!riverFile.eof()) {
+      riverFile >> tmp_x >> tmp_y;
+      Point tmp_points = {tmp_x, tmp_y};
+      points.push_back(tmp_points);
+      writeFile(tmp_points.x);
+      writeFile(tmp_points.y);
+      }
+  }
+  riverFile.close();
+}
+
+int main() {
+    readFile();
+}
