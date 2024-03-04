@@ -1,0 +1,106 @@
+#include <iostream>
+#include <vector>
+
+class Letter
+{ 
+public:
+    int adrress;
+    std::string sender_fio;
+    std::string reciever_fio;
+    Letter(std::string _sender_fio, std::string _reciever_fio, int _adrress) : sender_fio(_sender_fio), reciever_fio(_reciever_fio), adrress(_adrress)
+    {}
+    bool operator == (const Letter& letter)
+    {
+        if (adrress == letter.adrress)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+    
+    bool operator != (const Letter& letter)
+    {
+        if (adrress == 0)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+
+    bool operator < (const Letter& letter)
+    {
+        if (adrress < letter.adrress)
+        {
+            return false;
+        }
+        else { return true; }
+    }
+
+    bool operator > (const Letter& letter)
+    {
+        if (adrress > letter.adrress)
+        {
+            return false;
+        }
+        else { return true; }
+    }
+};
+
+std::ostream& operator << (std::ostream& stream, const Letter& letter)
+{
+    stream << "Адрес: " << letter.adrress << ", От : " << letter.sender_fio << ", Кому : " << letter.reciever_fio << std::endl;
+    return stream;
+} 
+
+int main()
+{
+    std::vector <Letter> letters;
+    setlocale(0, "");
+    srand(time(NULL));
+    
+    for (int i = 0; i < 100; i++)
+    {
+        letters.push_back(Letter("AAA", "BBB", rand()% 200));
+    }
+
+    for (int i = 0; i < letters.size(); i++)
+    {
+        for (int j = i + 1; j < letters.size(); j++)
+        {
+            if (letters[i] == letters[j])
+            {
+                std::cout << letters[i];
+                std::cout << letters[j];
+                std::cout << std::endl;
+            }
+        }
+    }
+
+    for (int i = 0; i < letters.size(); i++)
+    {
+        for (int j = i + 1; j < letters.size(); j++)
+        {
+            if (letters[i] != letters[j])
+            {
+                letters.push_back(letters[i]);
+                std::cout << letters[101];
+            }
+            
+        }
+    }
+
+    if (letters[10] > letters[11])
+    {
+        std::cout << letters[11] << " меньше чем " << letters[10];
+    }
+    else { std::cout << letters[11] << " больше чем " << letters[10]; }
+
+
+}
