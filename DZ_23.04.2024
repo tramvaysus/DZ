@@ -1,0 +1,28 @@
+#include <iostream>
+#include <thread>
+#include <chrono>
+
+void some_func() {
+    for (int i = 0; i < 10; i++) {
+        std::cout << std::this_thread::get_id() << ' ' << "\tsome_func\t" << i << std::endl;
+        std::this_thread::sleep_for(std::chrono::milliseconds(300));
+    }
+}
+
+int main() {
+    std::thread th_0(some_func);
+    std::thread th_1(some_func);
+
+    th_0.join();
+    std::thread th_2(some_func);
+
+    for (int i = 0; i < 10; i++) {
+        std::cout << std::this_thread::get_id() << ' ' << "\tmain\t" << i << std::endl;
+        std::this_thread::sleep_for(std::chrono::milliseconds(100));
+    }
+
+    th_1.join();
+    th_2.join();
+
+    return 0;
+}
